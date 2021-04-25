@@ -1,0 +1,40 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Sign Up Form</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="isa_error" class="isa_error" style="display:none">
+    <i class="fa fa-times-circle">
+        <span id="error_msg_text" style="border-width: medium"></span>
+    </i>
+</div>
+<div id="isa_info" class="isa_info" style="display:none">
+    <i class="fa fa-check-square">
+        <span id="info_msg_text" style="border-width: medium"></span>
+    </i>
+</div>
+<div class="formType">
+    <h1>Sign Up</h1>
+    <fieldset>
+        <label for="username">Name:</label>
+        <input type="text" id="username" name="username" ng-model="username">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" ng-model="email">
+
+        <label for="personalCode">Personal Code:</label>
+        <input type="text" id="personalCode" name="personalCode" ng-model="personalCode">
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" ng-model="address">
+
+        <label for="favoriteBook">Favorite Book:</label>
+        <input type="text" id="favoriteBook" name="favoriteBook" ng-model="favoriteBook">
+    </fieldset>
+    <button type="submit" ng-click="submitUserRegistration()">Sign Up</button>
+</div>
+</body>
+</html>
