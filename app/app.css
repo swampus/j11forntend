@@ -1,6 +1,13 @@
 /* app css stylesheet */
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+body {
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 10px;
+  margin-botom: 10px;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;

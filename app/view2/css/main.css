@@ -1,0 +1,76 @@
+body {
+    font-family: arial;
+}
+.caption {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 25px;
+    text-align: center;
+}
+.tr {
+    display: flex;
+}
+.th {
+    display: flex;
+    background: mediumblue;
+    color: white;
+}
+.td {
+    width: 20%;
+    border: 1px solid #777;
+    padding: 10px;
+}
+.tr:nth-of-type(even) {
+    background: #efefef;
+}
+
+@media (max-width: 600px), (max-device-width: 600px) {
+    .th {
+        display: none;
+    }
+    .tr {
+        display: block;
+        margin-bottom: 25px;
+        background: transparent !important;
+    }
+    .td {
+        background: #f0f0f0;
+        display: flex;
+        width: 90%;
+        margin: auto;
+    }
+    .td:before {
+        font-weight: bold;
+        display: block;
+        width: 50%;
+    }
+    .td:nth-of-type(1) {
+        background: mediumblue;
+        color: white;
+        font-weight: bold;
+    }
+    .td:nth-of-type(1):before {
+        content: "Name:";
+    }
+    .td:nth-of-type(2):before {
+        content: "DoB:";
+    }
+    .td:nth-of-type(3):before {
+        content: "Specialization:";
+    }
+    .td:nth-of-type(4):before {
+        content: "Blood Group:";
+    }
+    .td:nth-of-type(5):before {
+        content: "Emergency Contact:";
+    }
+}
+
+@media (max-device-width: 600px) {
+    .table {
+        font-size: 2rem;
+    }
+    .td {
+        padding: 20px;
+    }
+}

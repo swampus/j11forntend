@@ -1,5 +1,57 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<script>
+
+</script>
+<div class="caption">Employee Details</div>
+<div class="table">
+
+    <div class="tbody">
+        <div ng-repeat="userData in userArray track by $index">
+            <div class="th">
+                <div class="td" style="width: 5%">Nr.</div>
+                <div class="td">Username</div>
+                <div class="td">Personal Code</div>
+                <div class="td">Email</div>
+                <div class="td">Address</div>
+                <div class="td">Favourite Book</div>
+                <div class="td" style="width: 3%"></div>
+            </div>
+            <div class="tr">
+                <div class="td"  style="width: 5%">{{$index + 1}}
+                <span class="fa fa-book" ng-click="showHide(userData.username)" ></span>
+                </div>
+                <div class="td">{{userData.username}}</div>
+                <div class="td">{{userData.personalCode}}</div>
+                <div class="td">{{userData.email}}</div>
+                <div class="td">{{userData.address}}</div>
+                <div class="td">{{userData.favoriteBook}}</div>
+                <div class="td" style="width: 3%"><span class="fa fa-trash"
+                                                        ng-click="deleteUser(userData.id, userData.username)"></span>
+                </div>
+            </div>
+            <div id="{{userData.username}}" style="display: none">
+                <div class="th" style="background-color: #8a97a0">
+                    <div class="td" style="width: 3%">Nr.</div>
+                    <div class="td">Name</div>
+                    <div class="td">Author</div>
+                    <div class="td">Year</div>
+                    <div class="td"></div>
+                    <div class="td"></div>
+                    <div class="td" style="width: 3%"></div>
+                </div>
+                <div class="tr" ng-repeat="userBook in userData.bookDTOSet track by $index">
+                    <div class="td" style="width: 3%">{{$index + 1}}</div>
+                    <div class="td">{{userBook.name}}</div>
+                    <div class="td">{{userBook.author}}</div>
+                    <div class="td">{{userBook.year}}</div>
+                    <div class="td"></div>
+                    <div class="td"></div>
+                    <div class="td" style="width: 3%"><span class="fa fa-trash"
+                                                            ng-click="deleteBook(userBook.id)"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
