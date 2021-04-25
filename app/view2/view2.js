@@ -23,17 +23,15 @@ angular.module('myApp.view2', ['ngRoute'])
 
         $scope.deleteUser = function (id, username) {
             if (confirm("Are you sure to delete: " + username + " ?")) {
-                console.log("Implement delete functionality here");
+                $httpClient.put("http://localhost:9000/api/rest/User.svc/user(" + id + ")").then(function (response) {
+                    $scope.userArray= $scope.userArray.filter(user => user.id !== id);
+                }).catch(function (error) {
+                    console.log("user deleted");
+                    //show error DIV
+                    alert(error);
+                    console.log(error);
+                });
             }
-            $httpClient.put("http://localhost:9000/api/rest/User.svc/user(" + id + ")").then(function (response) {
-                $scope.userArray= $scope.userArray.filter(user => user.id !== id);
-            }).catch(function (error) {
-                console.log("user deleted");
-                //show error DIV
-                alert(error);
-                console.log(error);
-            });
-
         }
 
         $scope.showHide = function (id) {
