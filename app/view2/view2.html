@@ -1,6 +1,11 @@
 <script>
 
 </script>
+<div id="isa_error" class="isa_error" style="display:none">
+    <i class="fa fa-times-circle">
+        <span id="error_msg_text" style="border-width: medium"></span>
+    </i>
+</div>
 <div class="caption">Employee Details</div>
 <div class="table">
 
@@ -17,10 +22,13 @@
                 <div class="td" style="width: 3%"></div>
             </div>
             <div class="tr" id="tr_{{userData.id}}">
+                <input id="state_{{userData.id}}" type="hidden" value="VIEW" readonly />
                 <div class="td"  style="width: 5%">{{$index + 1}}
                 <span class="fa fa-book" ng-click="showHide(userData.username)" ></span>
                 </div>
-                <div id="username_{{userData.id}}" class="td" contenteditable="false">{{userData.username}}</div>
+                <div id="username_{{userData.id}}" class="td" contenteditable="false">{{userData.username}}
+
+                </div>
                 <div id="personalCode_{{userData.id}}" contenteditable="false" class="td">{{userData.personalCode}}</div>
                 <div id="email_{{userData.id}}" contenteditable="false" class="td">{{userData.email}}</div>
                 <div id="address_{{userData.id}}" contenteditable="false" class="td">{{userData.address}}</div>

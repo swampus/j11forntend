@@ -1,5 +1,16 @@
 'use strict';
 
+function switchUserViewMode(id) {
+    document.getElementById("state_" + id).value = "VIEW";
+    document.getElementById("tr_" + id).style.background = "white";
+    document.getElementById("span_delete_" + id).className = "fa fa-trash";
+    document.getElementById("span_edit_" + id).className = "fa fa-edit";
+
+    document.getElementById("username_" + id).contentEditable = false;
+    document.getElementById("personalCode_" + id).contentEditable = false;
+    document.getElementById("address_" + id).contentEditable = false;
+    document.getElementById("favoriteBook_" + id).contentEditable = false;
+}
 angular.module('myApp.view2', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
@@ -7,9 +18,7 @@ angular.module('myApp.view2', ['ngRoute'])
             templateUrl: 'view2/view2.html',
             controller: 'View2Ctrl'
         });
-    }])
-
-    .controller('View2Ctrl', ['$scope', '$http', function ($scope, $httpClient) {
+    }]).controller('View2Ctrl', ['$scope', '$http', '$route', function ($scope, $httpClient, $route) {
 
         $scope.userArray = {};
 
@@ -27,15 +36,21 @@ angular.module('myApp.view2', ['ngRoute'])
 
 
         $scope.deleteUser = function (id, username) {
-            if (confirm("Are you sure to delete: " + username + " ?")) {
-                $httpClient.put("http://localhost:9000/api/rest/User.svc/user(" + id + ")").then(function (response) {
-                    $scope.userArray = $scope.userArray.filter(user => user.id !== id);
-                }).catch(function (error) {
-                    console.log("user deleted");
-                    //show error DIV
-                    alert(error);
-                    console.log(error);
-                });
+            if(document.getElementById("state_"+id).value === "VIEW"){
+                if (confirm("Are you sure to delete: " + username + " ?")) {
+                    $httpClient.delete("http://localhost:9000/api/rest/User.svc/user(" + id + ")").then(function (response) {
+                        $scope.userArray = $scope.userArray.filter(user => user.id !== id);
+                    }).catch(function (error) {
+                        console.log("user deleted");
+                        //show error DIV
+                        alert(error);
+                        console.log(error);
+                    });
+                }
+            }else{
+                //cancel edit
+                switchUserViewMode(id);
+                $route.reload();
             }
         }
 
@@ -57,21 +72,49 @@ angular.module('myApp.view2', ['ngRoute'])
 
 
         $scope.editUser = function (id) {
-            document.getElementById("tr_"+id).style.background = "yellow";
-            document.getElementById("span_delete_"+id).className = "fa fa-times";
-            document.getElementById("span_edit_"+id).className = "fa fa-save";
+            if (document.getElementById("state_" + id).value === "VIEW") {
+                document.getElementById("state_" + id).value = "EDIT";
+                document.getElementById("tr_" + id).style.background = "yellow";
+                document.getElementById("span_delete_" + id).className = "fa fa-times";
+                document.getElementById("span_edit_" + id).className = "fa fa-save";
 
-            document.getElementById("username_" + id).contentEditable = true;
-            document.getElementById("personalCode_" + id).contentEditable = true;
-            document.getElementById("address_" + id).contentEditable = true;
-            document.getElementById("favoriteBook_" + id).contentEditable = true;
-/*
-            document.getElementById("delete_" + id).contentEditable = true;
-            document.getElementById("edit_" + id).contentEditable = true;
-*/
+                document.getElementById("username_" + id).contentEditable = true;
+                document.getElementById("personalCode_" + id).contentEditable = true;
+                document.getElementById("address_" + id).contentEditable = true;
+                document.getElementById("favoriteBook_" + id).contentEditable = true;
+            } else {
+                //UPDATE
 
-            console.log(id);
+
+
+                var userDTO = {
+                    username: document.getElementById("username_"+id).innerText,
+                    personalCode: document.getElementById("personalCode_"+id).innerText,
+                    address: document.getElementById("address_"+id).innerText,
+                    favoriteBook: document.getElementById("favoriteBook_"+id).innerText
+                };
+
+                var submitData = JSON.stringify(userDTO);
+                console.log(userDTO);
+                $httpClient.put("http://localhost:9000/api/rest/User.svc/user(" + id + ")", submitData)
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.error === true) {
+                            var errorDiv = document.getElementById("isa_error");
+                            errorDiv.style.display = 'block';
+                            document.getElementById("error_msg_text").innerHTML = response.data.message;
+                            setTimeout(function () {
+                                errorDiv.style.display = 'none';
+                            }, 3000);
+                        } else {
+                            $route.reload();
+                            switchUserViewMode(id);
+                        }
+                    });
+            }
         }
+
+
 
         $scope.showHide = function (id) {
             console.log(document.getElementById(id).style.display);
