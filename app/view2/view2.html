@@ -8,25 +8,27 @@
         <div ng-repeat="userData in userArray track by $index">
             <div class="th">
                 <div class="td" style="width: 5%">Nr.</div>
-                <div class="td">Username</div>
+                <div class="td fa fa-sort" ng-click="sortByUserName()">Username</div>
                 <div class="td">Personal Code</div>
                 <div class="td">Email</div>
                 <div class="td">Address</div>
                 <div class="td">Favourite Book</div>
                 <div class="td" style="width: 3%"></div>
+                <div class="td" style="width: 3%"></div>
             </div>
-            <div class="tr">
+            <div class="tr" id="tr_{{userData.id}}">
                 <div class="td"  style="width: 5%">{{$index + 1}}
                 <span class="fa fa-book" ng-click="showHide(userData.username)" ></span>
                 </div>
-                <div class="td">{{userData.username}}</div>
-                <div class="td">{{userData.personalCode}}</div>
-                <div class="td">{{userData.email}}</div>
-                <div class="td">{{userData.address}}</div>
-                <div class="td">{{userData.favoriteBook}}</div>
-                <div class="td" style="width: 3%"><span class="fa fa-trash"
-                                                        ng-click="deleteUser(userData.id, userData.username)"></span>
-                </div>
+                <div id="username_{{userData.id}}" class="td" contenteditable="false">{{userData.username}}</div>
+                <div id="personalCode_{{userData.id}}" contenteditable="false" class="td">{{userData.personalCode}}</div>
+                <div id="email_{{userData.id}}" contenteditable="false" class="td">{{userData.email}}</div>
+                <div id="address_{{userData.id}}" contenteditable="false" class="td">{{userData.address}}</div>
+                <div id="favoriteBook_{{userData.id}}" contenteditable="false" class="td">{{userData.favoriteBook}}</div>
+                <div id="delete_{{userData.id}}" contenteditable="false" class="td" style="width: 3%">
+                    <span id="span_delete_{{userData.id}}" class="fa fa-trash" ng-click="deleteUser(userData.id, userData.username)"></span></div>
+                <div id="edit_{{userData.id}}" contenteditable="false" class="td" style="width: 3%">
+                    <span id="span_edit_{{userData.id}}" class="fa fa-edit" ng-click="editUser(userData.id)"></span></div>
             </div>
             <div id="{{userData.username}}" style="display: none">
                 <div class="th" style="background-color: #8a97a0">
@@ -37,6 +39,7 @@
                     <div class="td"></div>
                     <div class="td"></div>
                     <div class="td" style="width: 3%"></div>
+                    <div class="td" style="width: 3%"></div>
                 </div>
                 <div class="tr" ng-repeat="userBook in userData.bookDTOSet track by $index">
                     <div class="td" style="width: 3%">{{$index + 1}}</div>
@@ -46,9 +49,15 @@
                     <div class="td"></div>
                     <div class="td"></div>
                     <div class="td" style="width: 3%"><span class="fa fa-trash"
-                                                            ng-click="deleteBook(userBook.id)"></span>
+                                                            ng-click="deleteBook(userBook.id,
+                                                            userBook.name)"></span>
 
                     </div>
+
+                    <div class="td" style="width: 3%"><span class="fa fa-edit"></span>
+
+                    </div>
+
                 </div>
             </div>
         </div>
